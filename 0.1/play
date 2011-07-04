@@ -2,6 +2,16 @@
 # 2011-07-04 14:52:41
 # Play radio
 
+# mms
+sput=$(file mms | awk '{ printf $2 }' | sed 's/://')
+if [ $sput = "ERROR" ] ; then
+  echo "You should addmms first"
+  exit 1
+elif [ $sput = "empty" ] ; then
+  echo "You should addmms first"
+  exit 1
+fi
+
 # mplayer
 mplayer=$(mplayer | head -1 | awk '{ printf $1 }')
 if [ $mplayer != "MPlayer" ] ; then
