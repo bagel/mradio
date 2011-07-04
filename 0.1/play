@@ -23,9 +23,9 @@ else
   max=$(tail -1 mms | awk '{ printf $1 }')
   let i=1
   while [ $i -le $max ] ; do
-    pnum=$(head -$i mms | tail -$i | awk '{ printf $1 }')
-    pmms=$(head -$i mms | tail -$i | awk '{ printf $3 }')
-    ptitle=$(head -$i mms | tail -$i | awk '{ printf $2 }')
+    pnum=$(head -$i mms | tail -1 | awk '{ printf $1 }')
+    pmms=$(head -$i mms | tail -1 | awk '{ printf $3 }')
+    ptitle=$(head -$i mms | tail -1 | awk '{ printf $2 }')
     if [ $pnum -eq $num ] ; then
       break
     else
