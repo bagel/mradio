@@ -1,0 +1,27 @@
+#!/bin/sh
+# 2011-07-04 14:52:41
+# Play radio
+
+# mplayer
+mplayer=$(mplayer | head -1 | awk '{ printf $1 }')
+if [ $mplayer != "MPlayer" ] ; then
+  echo "No mplayer install"
+else
+  cat mms | awk '{ printf $1":"$2 "\n" }'
+  echo -e "Choose the radio you want to play:\c"
+  read num
+  max=$(tail -1 mms | awk '{ printf $1 }')
+  let i=1
+  while [ $i -le $max ] ; do
+    pnum=$(head -$i mms | tail -$i | awk '{ printf $1 }')
+    pmms=$(head -$i mms | tail -$i | awk '{ printf $3 }')
+    ptitle=$(head -$i mms | tail -$i | awk '{ printf $2 }')
+    if [ $pnum -eq $num ] ; then
+      break
+    else
+      let i++
+    fi
+  done
+  echo "$ptitle"
+  mplayer $pmms >/dev/null 2>&1
+fi 

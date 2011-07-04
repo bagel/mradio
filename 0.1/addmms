@@ -1,0 +1,34 @@
+#!/bin/sh
+# 2011-07-04 13:53:38
+# Add radio mms
+
+#add radio
+sput=$(file mms | awk '{ printf $2 }' | sed 's/://')
+if [ $sput = "ERROR" ] ; then
+  echo "Create mms file..."
+  touch mms
+elif [ $sput = "empty" ] ; then
+  echo "Your mms is empty"
+fi
+
+echo -e "Do you want to add radio [y/n]:\c"
+read input
+while : ; do
+  if [ $input = "y" ] ; then
+    echo -e "Your radio title is:\c"
+    read title
+    echo -e "Your radio mms is:\c"
+    read mms
+    if [ $sput = "empty" ] ; then
+      echo -e "1\t$title\t$mms" >> mms
+    else
+      num=$(cat mms | tail -1 | awk '{ printf $1 }')
+      let "num += 1"
+      echo -e "$num\t$title\t$mms" >> mms
+    fi
+    echo -e "Do you want to add radio more [y/n]:\c"
+    read input
+  else
+    break
+  fi
+done
