@@ -3,11 +3,14 @@ Have two files,contain addmms and play,in total.
 Use addmms to add radio mms.
 Script play can invoke mplayer to play radio mms.
 
-How to use
-$./addmms
-add radio mms
-$./play
-play radio
+======>2011-09-01<======
+Add install file.
+How to install
+#./install
+Play radio
+$mradio
+Add radio mms
+$mradio -a
 
 Enjoy!
 Do you like that? I like that.

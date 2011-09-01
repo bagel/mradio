@@ -2,8 +2,10 @@
 # 2011-07-04 14:52:41
 # Play radio
 
+mradio=/usr/local/share/mradio
+
 # mms
-sput=$(file mms | awk '{ printf $2 }' | sed 's/://')
+sput=$(file $mradio/mms | awk '{ printf $2 }' | sed 's/://')
 if [ $sput = "ERROR" ] ; then
   echo "You should addmms first"
   exit 1
@@ -20,12 +22,12 @@ else
   cat mms | awk '{ printf $1":"$2 "\n" }'
   echo -e "Choose the radio you want to play:\c"
   read num
-  max=$(tail -1 mms | awk '{ printf $1 }')
+  max=$(tail -1 $mradio/mms | awk '{ printf $1 }')
   let i=1
   while [ $i -le $max ] ; do
-    pnum=$(head -$i mms | tail -1 | awk '{ printf $1 }')
-    pmms=$(head -$i mms | tail -1 | awk '{ printf $3 }')
-    ptitle=$(head -$i mms | tail -1 | awk '{ printf $2 }')
+    pnum=$(head -$i $mradio/mms | tail -1 | awk '{ printf $1 }')
+    pmms=$(head -$i $mradio/mms | tail -1 | awk '{ printf $3 }')
+    ptitle=$(head -$i $mradio/mms | tail -1 | awk '{ printf $2 }')
     if [ $pnum -eq $num ] ; then
       break
     else
