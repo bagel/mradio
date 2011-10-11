@@ -2,9 +2,7 @@
 # 2011-09-01 18:56:27
 # install
 
-mradio=$/usr/local/share/mradio
-install -d -m 755 $mradio/mradio -v
-install -m 755 addmms $mradio/mradio -v
-install -m 755 play $mradio/mradio -v
+mpath=/usr/local/share/mradio
+install -m 755 -d $mpath -v
+install -m 755 -d {addmms,play,altermms,mms} -v
 install -m 755 mradio /usr/local/bin -v
-touch $mradio/mradio/mms

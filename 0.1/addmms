@@ -2,13 +2,11 @@
 # 2011-07-04 13:53:38
 # Add radio mms
 
-mradio=/usr/local/share/mradio
-
 #add radio
-sput=$(file $mradio/mms | awk '{ printf $2 }' | sed 's/://')
+sput=$(file mms | awk '{ printf $2 }' | sed 's/://')
 if [ $sput = "ERROR" ] ; then
   echo "Create mms file..."
-  touch $mradio/mms
+  touch mms
 elif [ $sput = "empty" ] ; then
   echo "Your mms is empty"
 fi
@@ -22,11 +20,11 @@ while : ; do
     echo -e "Your radio mms is:\c"
     read mms
     if [ $sput = "empty" ] ; then
-      echo -e "1\t$title\t$mms" >> $mradio/mms
+      echo -e "1\t$title\t$mms" >> mms
     else
-      num=$(cat $mradio/mms | tail -1 | awk '{ printf $1 }')
+      num=$(cat mms | tail -1 | awk '{ printf $1 }')
       let "num += 1"
-      echo -e "$num\t$title\t$mms" >> $mradio/mms
+      echo -e "$num\t$title\t$mms" >> mms
     fi
     echo -e "Do you want to add radio more [y/n]:\c"
     read input

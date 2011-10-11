@@ -1,0 +1,66 @@
+#!/bin/sh
+# 2011-10-11 18:05:45
+# alter mms
+
+mpath=/usr/local/share/mradio
+mms=/usr/local/share/mradio/mms
+awk '{ print $1 ":" $2 }' mms
+
+#read input num and mms
+reput()
+{
+    echo -e "Choose the radio you want to change("q" to quit):\c"
+    read num
+    if [ "$num" = "q" ]
+    then
+        break
+    else
+        let j=0
+        for i in $(awk '{ print $1 }' $mms)
+        do
+            if [ $num -eq $i ]
+            then
+                echo -e "Please input mms:\c"
+                read almms
+                let j=1
+                break
+            fi
+        done
+        if [ $j -eq 0 ]
+        then
+            echo -e "Invalid input please retry("q" to quit):\c"
+            read numg
+            if [ "$numg" != "q" ]
+            then
+                continue
+            else
+                break
+            fi
+        fi
+    fi
+}
+
+#alter mms file
+alter()
+{
+    let "unum=$num-1"
+    mnum=$(wc -l $mms | awk '{ print $1 }')
+    let "dnum=$mnum-$num"
+    head -$unum $mms > $mpath/umms
+    tail -$dnum $mms > $mpath/dmms
+    radio=$(awk -v arg="$num" '$1 ~ arg{ print $2 }' $mms)
+    cat $mpath/umms > $mpath/mms
+    echo -e "$num\t$radio\t$almms" >> $mpath/mms
+    cat $mpath/dmms >> $mpath/mms
+    rm $mpath/{umms,dmms} -f
+    echo "Success!"
+}
+
+#recycle to alter mms
+while [ 1 -eq 1 ]
+do
+    reput
+    alter
+done
+
+echo "Goodbye!"

@@ -2,10 +2,15 @@
 # 2011-09-01 18:44:47
 # mradio
 
-if [ $# -le 0 ] ; then
-    /usr/local/share/mradio/play
-elif [ $# -le 1 ] ; then
+mpath=/usr/local/share/mradio
+if [ $# -eq 0 ] ; then
+    $mpath/play
+elif [ $# -eq 1 ] ; then
     case $1 in
-        -a) /usr/local/share/mradio/addmms ;;
+        -a) $mpath/addmms ;;
+        -c) $mpath/altermms ;;
     esac
+else
+    echo "Invalid"
+    exit
 fi
