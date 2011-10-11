@@ -9,8 +9,6 @@ elif [ $# -eq 1 ] ; then
     case $1 in
         -a) $mpath/addmms ;;
         -c) $mpath/altermms ;;
+        *) echo "Invalid!" ;;
     esac
-else
-    echo "Invalid"
-    exit
 fi
