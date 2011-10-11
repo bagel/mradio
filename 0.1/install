@@ -3,6 +3,9 @@
 # install
 
 mpath=/usr/local/share/mradio
-install -m 755 -d $mpath -v
-install -m 755 -d {addmms,play,altermms,mms} -v
+if [ ! -e $mpath ]  #$mpath no exsit create
+then
+    install -m 755 -d $mpath -v
+fi
+install -m 755 {addmms,play,altermms,mms} $mpath -v
 install -m 755 mradio /usr/local/bin -v
