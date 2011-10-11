@@ -4,7 +4,7 @@
 
 mpath=/usr/local/share/mradio
 mms=/usr/local/share/mradio/mms
-awk '{ print $1 ":" $2 }' mms
+awk '{ print $1 ":" $2 }' $mms
 
 #read input num and mms
 reput()
