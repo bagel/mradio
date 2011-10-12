@@ -3,7 +3,8 @@
 # Play radio
 
 # mms
-sput=$(file mms | awk '{ printf $2 }' | sed 's/://')
+mms=/usr/local/share/mradio/mms
+sput=$(file $mms | awk '{ printf $2 }' | sed 's/://')
 if [ $sput = "ERROR" ] ; then
   echo "You should addmms first"
   exit 1
@@ -17,15 +18,25 @@ mplayer=$(mplayer | head -1 | awk '{ printf $1 }')
 if [ $mplayer != "MPlayer" ] ; then
   echo "No mplayer install"
 else
-  cat mms | awk '{ printf $1":"$2 "\n" }'
-  echo -e "Choose the radio you want to play:\c"
+  cat $mms | awk '{ printf $1":"$2 "\n" }'
+  echo -e "Choose the radio you want to play(\"q\" to quit):\c"
   read num
-  max=$(tail -1 mms | awk '{ printf $1 }')
+  #if num not in mms then exit
+  case $num in
+      q) exit ;;
+      [0-9][0-9]) continue ;;
+      *) exit ;;
+  esac
+  max=$(tail -1 $mms | awk '{ printf $1 }')
+  if [ $num -gt $max ]
+  then
+      exit
+  fi
   let i=1
   while [ $i -le $max ] ; do
-    pnum=$(head -$i mms | tail -1 | awk '{ printf $1 }')
-    pmms=$(head -$i mms | tail -1 | awk '{ printf $3 }')
-    ptitle=$(head -$i mms | tail -1 | awk '{ printf $2 }')
+    pnum=$(head -$i $mms | tail -1 | awk '{ printf $1 }')
+    pmms=$(head -$i $mms | tail -1 | awk '{ printf $3 }')
+    ptitle=$(head -$i $mms | tail -1 | awk '{ printf $2 }')
     if [ $pnum -eq $num ] ; then
       break
     else
