@@ -11,32 +11,26 @@ reput()
 {
     echo -e "Choose the radio you want to change("q" to quit):\c"
     read num
-    if [ "$num" = "q" ]
+    case $num in
+        q) break ;;
+        [0-9]*) ;;
+        *) break ;;
+    esac
+    max=$(tail -1 $mms | awk '{ print $1 }')
+    if [ $num -gt $max ]
     then
         break
-    else
-        let j=0
-        for i in $(awk '{ print $1 }' $mms)
-        do
-            if [ $num -eq $i ]
-            then
-                echo -e "Please input mms:\c"
-                read almms
-                let j=1
-                break
-            fi
-        done
-        if [ $j -eq 0 ]
-        then
-            echo -e "Invalid input please retry("q" to quit):\c"
-            read numg
-            if [ "$numg" != "q" ]
-            then
-                continue
-            else
-                break
-            fi
-        fi
+    fi
+    echo -e "Please input mms:\c"
+    read almms
+    if [ -z "$almms" ]
+    then
+        echo -e "Invalid input please retry("q" to quit):\c"
+        read numg
+        case $numg in
+            q) break ;;
+            *) continue ;;
+        esac
     fi
 }
 
