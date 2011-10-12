@@ -24,7 +24,7 @@ else
   #if num not in mms then exit
   case $num in
       q) exit ;;
-      [0-9][0-9]) continue ;;
+      [0-9]*) continue ;;
       *) exit ;;
   esac
   max=$(tail -1 $mms | awk '{ printf $1 }')
